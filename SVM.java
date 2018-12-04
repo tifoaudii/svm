@@ -6,7 +6,7 @@ public class SVM {
   double weight;
   int label;
 
-  double[][] dataTraining = { { 60, 165, 1 }, { 70, 160, 1 }, { 80, 165, 1 }, { 100, 155, -1 }, { 40, 175, -1 } };
+  double[][] dataTraining = {{ 60, 165, 1 }, { 70, 160, 1 }, { 80, 165, 1 }, { 100, 155, -1 }, { 40, 175, -1 }};
   double[][] datappt = {{1,1,-1},{1,-1,1},{-1,1,1},{-1,-1,-1}};
   double[][] matrixKernel = new double[dataTraining.length][dataTraining.length];
   double[] alphaResult = new double[dataTraining.length];
@@ -42,7 +42,7 @@ public class SVM {
     double gamma = 0;
     double[][] Dij = new double[dataTraining.length][dataTraining.length];
     double[] alpha = new double[dataTraining.length];
-    double threshold = 0.00000000001;
+  
 
     double maxDij = Double.MIN_VALUE;
 
@@ -58,7 +58,7 @@ public class SVM {
     }
 
     // set gamma
-    gamma = (0.1d / (50d * maxDij));
+    gamma = (22.8d / (50d * maxDij));
 
     // hitung alpha
     for (int i = 0; i < 2000; i++) {
@@ -70,7 +70,6 @@ public class SVM {
         for (int k = 0; k < alpha.length; k++) {
           Ei[j] += Dij[k][j] * alpha[k];
         }
-
         delta[j] = Math.min((Math.max(gamma * (1 - Ei[j]), -alpha[j])), constanta - alpha[j]);
 
         // set nilai baru alfa
@@ -87,10 +86,8 @@ public class SVM {
     for (int i = 0; i < dataTraining.length; i++) {
       result += (Math.pow((this.weight * dataTraining[i][0]) + (this.height * dataTraining[i][1]) + 1, 2))
           * (alphaResult[i] * dataTraining[i][2]);
-          System.out.println(alphaResult[i]*dataTraining[i][2]);
-      System.out.println("the result of iteration " + i + ": " + result);
     }
-
+    System.out.println("\nHasil data testing : " + result);
     this.label = (result >= 0) ? 1 : -1;
   }
 
@@ -106,6 +103,6 @@ public class SVM {
     // test data baru
     testNewData();
 
-    System.out.println(this.label);
+    System.out.println("Masuk ke kelas " + this.label);
   }
 }
